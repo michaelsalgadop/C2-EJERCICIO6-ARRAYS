@@ -8,7 +8,10 @@ const resultadoPacientes = (pacientes) => ({
 const getNumeroMayoresEdad = (pacientes) =>
   pacientes.filter(({ paciente: { edad } }) => edad >= 18).length;
 const getNumeroHombresDiabeticos = (pacientes) =>
-  pacientes.filter(({ dieta }) => dieta === "Diabetes").length;
+  pacientes.filter(
+    ({ dieta, paciente: { sexo } }) =>
+      dieta === "Diabetes" && sexo.toLowerCase() === "h"
+  ).length;
 const getTotalDiasIngreso = (pacientes) =>
   pacientes.reduce(
     (acumulador, { diasIngresado }) => acumulador + diasIngresado,
@@ -16,7 +19,7 @@ const getTotalDiasIngreso = (pacientes) =>
   );
 const getMediaEdadMujeres = (pacientes) =>
   pacientes
-    .filter(({ paciente: { sexo } }) => sexo === "M")
+    .filter(({ paciente: { sexo } }) => sexo.toLowerCase() === "m")
     .reduce(
       (acumulador, { paciente: { edad } }, i, mujeres) =>
         acumulador + edad / mujeres.length,
